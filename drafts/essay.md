@@ -67,6 +67,14 @@ The question is why we ever stopped building things that work that way.
 
 ## 2. Why this happened
 
+The read path won, and it won completely. Over the 2000s and 2010s, the publishing layer settled into defaults that are genuinely excellent: write a flat file, run it through a static-site generator, push it to a CDN. Jekyll in 2008, Hugo a few years later, GitHub Pages as a free host for anyone with a repository. The result was durable content that anyone could serve from anywhere. That part of the story went right.
+
+The write path never got the memo. While the read path was reinventing itself around flat files and content-addressable artifacts, the write path stayed in the 1995 mold: a server with mutable state, owned by an operator, with someone responsible for paying the bill. Comments, accounts, sessions, edit history, anything that required a user to change something: all of it still went through a database somewhere, administered by someone, dependent on that someone staying interested.
+
+And every product that came along to fix WordPress reproduced the same architectural mistake. Ghost, Medium, Substack, Notion, Decap CMS, TinaCMS, CloudCannon: each one pitched itself as the clean successor. The copy was better. The editing experience was smoother. The hosting was cheaper or simpler or more modern. But look at the shape underneath each one: a privileged server holding mutable state that the user does not own. The argument here is not that any of these products are bad. Most of them are fine. The argument is about the shape they all share. Different paint, same chassis.
+
+The Jamstack movement looked like it might break this pattern. Static frontends, decoupled backends, deploy via git push. But "static frontend plus a SaaS backend" is not an architectural improvement; it is the same failure mode with extra steps. The HTML is still durable. The dynamic layer, the comments, the reaction counts, the personalization, still lives in a database somewhere. When that SaaS raises prices or shuts down, the participation layer dies exactly the way the phpBB forum died. The vocabulary changed. The structure did not.
+
 ## 3. The missing primitive
 
 ## 4. Git's vocabulary is strictly richer than REST's
