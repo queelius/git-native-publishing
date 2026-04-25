@@ -143,7 +143,9 @@ Before that commit lands, a pre-commit hook runs a verifier. Piece 042 either fi
 
 If two readers grab piece 042 at the same moment, one commit lands first. The second client gets a conflict, fetches fresh state, and retries with a piece that is actually available. Git's model is optimistic concurrency: no locking, no coordination, just commit and retry if you collide. No CRDT machinery required; no special conflict-resolution protocol.
 
-Two people placing different pieces never conflict at all. The moves commute: order does not matter for the final picture. Participation is also visceral in a way comments are not. People want to place a piece; they want to see the picture advance. And the picture forming in front of you is the demo itself: you can watch the assembly happen across all contributors in real time.
+Two people placing different pieces never conflict at all. The moves commute: order does not matter for the final picture.
+
+Participation is visceral in a way comments are not. People want to place a piece; they want to see the picture advance. And the picture forming in front of you is the demo itself: you can watch the assembly happen across all contributors in real time.
 
 Each week's puzzle uses a freshly-generated image. Reverse image search returns nothing; the picture is genuinely new to everyone who shows up.
 
