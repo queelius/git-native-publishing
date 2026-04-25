@@ -33,6 +33,42 @@ Your forum threads from 2008 are gone.
 
 ## 1. The asymmetry
 
+But your 2008 blog post still renders.
+
+If someone published it as static HTML or Markdown on a personal domain and kept
+paying eight dollars a year for hosting, the URL still works. The page still
+loads. The words are still there. You can read it right now on a browser that
+didn't exist when it was written, running on hardware the author never imagined,
+fetched over a protocol version that postdates the post itself. None of that
+matters. The file is a file.
+
+Markdown won the durability war by being boring. There is no schema to migrate.
+No application server to restart. No vendor to outlive. A `.md` file is a text
+file; a text file from 2008 is as readable today as it was then. The boring-ness
+is the point. When a format makes no demands on its environment, the environment
+can change freely around it. People who chose flat files in 2006 were not
+visionaries; they were lazy in the exact right way.
+
+The forum did not have that option. A phpBB community, a vBulletin board, an
+early social network: those were alive only while someone was tending the server.
+The moment the moderator got a new job, or the hosting bill bounced, or the
+company decided the product was dead, the state went with them. Not just the
+posts, but the replies, the edits, the votes, the relationships between pieces of
+content. All of it lived in a database that required an operator. When the
+operator left, the database closed.
+
+And this is not just about old forums. It is the same story for every layer of
+interactivity we add to a page today. Want comments? You need mutable state. Want
+reactions, edits, collaborative cursors, presence indicators? Each one needs a
+write path, and every write path needs a server, and every server needs someone
+responsible for it. The content stays up. The interactions disappear.
+
+*Reads are durable; writes are not.*
+
+The static file survives because no one has to do anything to keep it alive.
+The database dies because someone has to keep choosing to keep it alive, and
+eventually they stop choosing.
+
 ## 2. Why this happened
 
 ## 3. The missing primitive
