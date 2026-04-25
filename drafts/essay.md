@@ -111,7 +111,7 @@ Git's vocabulary includes all five of those operations and adds six that REST ha
 
 Two entries in that table carry the most rhetorical weight. A signed commit binds authorship to a public key at the data layer, not at the application layer. You do not need an accounts table or a session store; identity travels with the record itself. A fork means a user can take the entire history and leave: not an export, not a backup request, but a full lossless copy with its own future. No REST API offers that operation. A `DELETE /users/me` removes your account; it does not give you the log.
 
-The deeper point is that git's log is already an event store in the sense Greg Young articulated with event sourcing and CQRS: each commit is a domain event, and the working tree is a projection derived from replaying those events. The same log can feed many different applications via different read projections: a comment widget, a reaction aggregator, a moderation log, a stats dashboard. None of them require a schema migration when a new projection is added; they just query the log differently. The **commit-as-write** primitive that §3 named is, in event-sourcing terms, an append to an immutable event log.
+The deeper point is that git's log is already an event store in the sense Greg Young articulated with event sourcing and CQRS: each commit is a domain event, and the working tree is a projection derived from replaying those events. The same log can feed many different applications via different read projections: a comment widget, a reaction aggregator, a moderation log. None of them require a schema migration when a new projection is added; they just read the same log through a different lens. The **commit-as-write** primitive that §3 named is, in event-sourcing terms, an append to an immutable event log.
 
 A commit message can carry a typed payload, making the log a free event store with no schema layer:
 
@@ -123,9 +123,7 @@ actor: queelius
 ts: 2026-04-24T22:45:00Z
 ```
 
-Any reader action that can be expressed as a typed operation and a target fits this shape: a comment, a reaction, a vote, a placed jigsaw piece.
-
-The next section works one through with a jigsaw puzzle: discrete pieces, unambiguous positions, multiple actors, shared state.
+Any reader action that can be expressed as a typed operation and a target fits this shape: a comment, a reaction, a vote. The next section uses a jigsaw puzzle for exactly this reason: discrete pieces, unambiguous positions, multiple actors, shared state.
 
 ## 5. The jigsaw, a worked example
 
