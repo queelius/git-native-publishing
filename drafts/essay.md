@@ -49,10 +49,8 @@ is the point. When a format makes no demands on its environment, the environment
 can change freely around it. People who chose flat files in 2006 were not
 visionaries; they were lazy in the exact right way.
 
-The forum did not have that option. A phpBB community, a vBulletin board, an
-early social network: those were alive only while someone was tending the server.
-The moment the moderator got a new job, or the hosting bill bounced, or the
-company decided the product was dead, the state went with them. Not just the
+The forum did not have that option. A phpBB community lives only while someone tends the server. The moment the
+hosting bill bounces or the moderator takes a new job, the state goes with them. Not just the
 posts, but the replies, the edits, the votes, the relationships between pieces of
 content. All of it lived in a database that required an operator. When the
 operator left, the database closed.
@@ -65,9 +63,7 @@ responsible for it. The content stays up. The interactions disappear.
 
 *Reads are durable; writes are not.*
 
-The static file survives because no one has to do anything to keep it alive.
-The database dies because someone has to keep choosing to keep it alive, and
-eventually they stop choosing.
+The question is why we ever stopped building things that work that way.
 
 ## 2. Why this happened
 
