@@ -155,4 +155,14 @@ That is the shape of git-native publishing in practice. But there is a class of 
 
 ## 6. Honest limits
 
+This is not a substrate for high-frequency writes. Placing 500 jigsaw pieces per week is fine; 500 tweets per second is not. Git was designed for human-paced collaboration, not real-time mutable state at scale. Twitter, Instagram feeds, live chat: wrong problem. Comments, reactions, puzzle moves, forum threads, slow social: those fit. The claim is about the participation layer, not about replacing Redis.
+
+The MVP uses GitHub OAuth and the GitHub commit API. That dependency is real but contingent. The architecture binds to git, not to Microsoft. Any git host works: GitLab, Gitea, a self-hosted bare repository, even a local file via the File System Access API. GitHub is where most readers already have accounts. It is a starting point, not a structural requirement.
+
+Moderation is post-hoc, not pre-hoc. A revert or rebase can remove a bad commit, but the commit has to land first. WordPress's approval queue blocks spam before anyone sees it; this model cannot do that. For open-internet participation with anonymous actors, this is a genuine cost. For trusted communities, allowlisted accounts, or contexts where identity is required to commit, the difference is manageable.
+
+The right-to-be-forgotten cuts against append-only history. Git's content-addressing means each commit hash depends on every commit before it. True deletion requires rebasing, and that rebase must be accepted by every clone holder. Cooperation cannot be guaranteed. This is a structural cost, not an engineering problem waiting for a solution. Any deployment in a GDPR-covered jurisdiction needs to reason carefully about what personal data enters the commit payload.
+
+The argument here is not that this beats everything. It is that the durable write substrate has been missing, and git already provides it for one specific class of interactions.
+
 ## 7. The claim, and the invitation
