@@ -82,7 +82,7 @@ The unit of change in this substrate is a git commit, not a SQL row. Call this *
 
 Build with commit-as-write as the default and you get **git-native publishing**: the static web with a write path that matches the read path's durability.
 
-The Ink & Switch local-first essay (2019) is the philosophical predecessor to this argument. It named the problem clearly: users should own their data, software should work offline, and nothing should disappear because a vendor stopped paying its server bill. Git-native publishing is local-first applied specifically to the public web's read-write substrate, using git's existing infrastructure rather than CRDTs. The "git-based CMS" industry (Decap, TinaCMS, CloudCannon) is the closest existing term, but it describes the wrong layer: those tools put git behind the editorial workflow for site *operators*, not behind the participation layer for *readers*. Utterances and Giscus proved that reader writes can live in a GitHub-hosted repository without a separate database, but they write to Issues and Discussions, not to the commit log, and neither project claims to generalize the pattern.
+The Ink & Switch local-first essay (2019) is the philosophical predecessor to this argument. It named the problem clearly: users should own their data, software should work offline, and nothing should disappear because a vendor stopped paying its server bill. Git-native publishing is local-first applied specifically to the public web's read-write substrate, using git's existing infrastructure. The "git-based CMS" industry (Decap, TinaCMS, CloudCannon) is the closest existing term, but it describes the wrong layer: those tools put git behind the editorial workflow for site *operators*, not behind the participation layer for *readers*. Utterances and Giscus proved that reader writes can live in a GitHub-hosted repository without a separate database, but they write to Issues and Discussions, not to the commit log, and neither project claims to generalize the pattern.
 
 This substrate has a vocabulary REST does not.
 
@@ -90,7 +90,7 @@ This substrate has a vocabulary REST does not.
 
 REST's vocabulary is five verbs applied to named resources: GET, POST, PUT, PATCH, DELETE. That model has been the operating assumption of the writable web for roughly 25 years. It is not wrong; it maps cleanly onto databases, fits HTTP semantics, and scales to most application needs. But it is a model for mutating state, not for accumulating history.
 
-Git's vocabulary includes all five of those operations and adds six that REST has no native equivalent for: `branch`, `tag`, `merge`, `fork`, signed commit, `submodule`. These are not convenience features layered on top of storage. They are the core operations that make distributed version control work, and each one carries semantics REST cannot express.
+Git's vocabulary includes all five of those operations and adds six that REST has no native equivalent for: `branch`, `tag`, `merge`, `fork`, signed commit, `submodule`. They are the core operations that make distributed version control work, and each one carries semantics REST cannot express.
 
 | REST/DB verb | Git operation | What git adds that REST/SQL can't |
 |---|---|---|
@@ -106,7 +106,7 @@ Git's vocabulary includes all five of those operations and adds six that REST ha
 | `(none)` | signed commit | authentication baked into the data layer |
 | `(none)` | `submodule` | composable embedded references across repos |
 
-Two entries in that table carry the most rhetorical weight. A signed commit binds authorship to a public key at the data layer, not at the application layer. You do not need an accounts table or a session store; identity travels with the record itself. A fork means a user can take the entire history and leave: not an export, not a backup request, but a full lossless copy with its own future. No REST API offers that operation. A `DELETE /users/me` removes your account; it does not give you your history.
+Two entries in that table carry the most rhetorical weight. A signed commit binds authorship to a public key at the data layer, not at the application layer. You do not need an accounts table or a session store; identity travels with the record itself. A fork means a user can take the entire history and leave: not an export, not a backup request, but a full lossless copy with its own future. A `DELETE /users/me` removes your account; it does not give you your history.
 
 The deeper point is that git's log is already an event store in the sense Greg Young articulated with event sourcing and CQRS: each commit is a domain event, and the working tree is a projection derived from replaying those events. The same log can feed many different applications via different read projections: a comment widget, a reaction aggregator, a moderation log. None of them require a schema migration when a new projection is added; they just read the same log through a different lens. The commit-as-write primitive that §3 named is, in event-sourcing terms, an append to an immutable event log.
 
@@ -160,16 +160,16 @@ Moderation is post-hoc, not pre-hoc. A revert or rebase can remove a bad commit,
 
 The right-to-be-forgotten cuts against append-only history. Git's content-addressing means each commit hash depends on every commit before it. True deletion requires rebasing, and that rebase must be accepted by every clone holder. Cooperation cannot be guaranteed. This is a structural cost, not an engineering problem waiting for a solution: anything that enters the commit payload may sit there forever.
 
-The argument here is not that this beats everything. It is that the durable write substrate has been missing, and git already provides it for one specific class of interactions.
+The argument here is not that this beats everything.
 
 ## 7. The claim, and the invitation
 
 This is git-native publishing. The unit of change is commit-as-write. These are not new tools; they are a new name for a category that has existed without one, and a label for a primitive that has been available since git became ubiquitous.
 
-I am not selling anything. There is no product here. The argument is narrower: the durable write substrate has been absent from the web's read-write architecture since the beginning, and git already provides it for the class of interactions where that absence hurts most. That is a specific claim, not a broad one. It either holds up or it doesn't.
+I am not selling anything. There is no product here. The argument is narrower: the durable write substrate has been absent from the web's read-write architecture since the beginning, and git already provides it for the class of interactions where that absence hurts most. It either holds up or it doesn't.
 
 If you have built something in this shape, I want to know. Not because it validates the category, but because I want to study what you learned. Reach me at lex@metafunctor.com or as @queelius.
 
-The puzzle is at `/jigsaw`. Place a piece. It takes thirty seconds. When you do, your name goes into the commit log, signed by your GitHub identity, alongside everyone else who has touched it.
+The puzzle is at `/arcade/jigsaw`. Place a piece. It takes thirty seconds. When you do, your name goes into the commit log, signed by your GitHub identity, alongside everyone else who has touched it.
 
 This essay's own source is markdown in a git repository at `github.com/queelius/git-native-publishing`. The library that powers the jigsaw is at `github.com/queelius/git-native`. When you read this essay, you are reading commits in the substrate it is naming. The argument is demonstrated by the thing you are holding.
