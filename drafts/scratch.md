@@ -18,7 +18,25 @@
 
 ## Structured-commit examples for §4 and §5
 
-(examples go here, built in Task 3)
+**§4 generic example:**
+
+```
+op: react
+target: posts/your-blog-will-outlive-your-database
+value: 🔥
+actor: queelius
+ts: 2026-04-24T22:45:00Z
+```
+
+**§5 jigsaw example:**
+
+```
+op: place
+piece: 042
+slot: [3, 7]
+actor: queelius
+ts: 2026-04-24T22:47:13Z
+```
 
 ## Candidate opening lines for §0
 
