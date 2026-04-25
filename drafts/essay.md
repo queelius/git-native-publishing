@@ -4,8 +4,8 @@
 
 ## 0. The puzzle
 
-Scroll to the bottom of this page. There's a jigsaw puzzle there, and right
-now 47 people are working on it with you. Some of them placed a piece an hour
+Scroll to the bottom of this page. There's a jigsaw puzzle there, and 47
+people have placed pieces in it. Some of them placed a piece an hour
 ago. One placed a piece while you were reading this sentence. You can see the
 picture assembling itself, tile by tile, toward something that isn't quite
 resolved yet.
@@ -127,7 +127,7 @@ Any reader action that can be expressed as a typed operation and a target fits t
 
 ## 5. The jigsaw, a worked example
 
-Go back to the puzzle at the bottom of the page. Those 47 people working alongside you: every move they made is a commit in a public repository, signed by their GitHub identity, timestamped, carrying a structured payload. When you place a piece, your client pushes something that looks like this:
+Go back to the puzzle at the bottom of the page. Those 47 people who have placed pieces in this puzzle: every move they made is a commit in a public repository, signed by their GitHub identity, timestamped, carrying a structured payload. When you place a piece, your client pushes something that looks like this:
 
 ```
 op: place
@@ -175,4 +175,4 @@ If you have built something in this shape, I want to know. Not because it valida
 
 The puzzle is at `/jigsaw`. Place a piece. It takes thirty seconds. When you do, your name goes into the commit log, signed by your GitHub identity, alongside everyone else who has touched it.
 
-This essay's own source is markdown in a git repository at `github.com/queelius/git-native-publishing`. When you read it, you are reading commits in the substrate the essay is naming. The argument is demonstrated by the thing you are holding.
+This essay's own source is markdown in a git repository at `github.com/queelius/git-native-publishing`. The library that powers the jigsaw is at `github.com/queelius/git-native`. When you read this essay, you are reading commits in the substrate it is naming. The argument is demonstrated by the thing you are holding.
