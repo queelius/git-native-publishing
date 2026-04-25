@@ -166,3 +166,13 @@ The right-to-be-forgotten cuts against append-only history. Git's content-addres
 The argument here is not that this beats everything. It is that the durable write substrate has been missing, and git already provides it for one specific class of interactions.
 
 ## 7. The claim, and the invitation
+
+This is git-native publishing. The unit of change is commit-as-write. These are not new tools; they are a new name for a category that has existed without one, and a label for a primitive that has been available since git became ubiquitous.
+
+I am not selling anything. There is no product here. The argument is narrower: the durable write substrate has been absent from the web's read-write architecture since the beginning, and git already provides it for the class of interactions where that absence hurts most. That's a specific claim, not a broad one. It either holds up or it doesn't.
+
+If you have built something in this shape, I want to know. Not because it validates the category, but because I want to study what you learned. Reach me at lex@metafunctor.com, or find me as @queelius on most platforms.
+
+The puzzle is at `/jigsaw`. Place a piece. It takes thirty seconds. When you do, your name goes into the commit log, signed by your GitHub identity, alongside everyone else who has touched it. That record does not belong to me. It will exist as long as one copy of the repository exists anywhere. So will mine.
+
+This essay's own source is markdown in a git repository at `github.com/queelius/git-native-publishing`. When you read it, you are reading commits in the substrate the essay is naming. The argument is demonstrated by the thing you are holding.
