@@ -91,6 +91,42 @@ This substrate has a vocabulary REST does not.
 
 ## 4. Git's vocabulary is strictly richer than REST's
 
+REST's vocabulary is five verbs applied to named resources: GET, POST, PUT, PATCH, DELETE. That model has been the operating assumption of the writable web for roughly 25 years. It is not wrong; it maps cleanly onto databases, fits HTTP semantics, and scales to most application needs. But it is a model for mutating state, not for accumulating history.
+
+Git's vocabulary includes all five of those operations and adds six that REST has no native equivalent for: `branch`, `tag`, `merge`, `fork`, signed commit, `submodule`. These are not convenience features layered on top of storage. They are the core operations that make distributed version control work, and each one carries semantics REST cannot express. The table makes this concrete:
+
+| REST/DB verb | Git operation | What git adds that REST/SQL can't |
+|---|---|---|
+| `POST` (create) | `commit` (new file) | signed, time-stamped, cryptographically attributed |
+| `PUT` (replace) | `commit` (overwrite) | prior versions preserved automatically |
+| `PATCH` (partial) | `commit` (line-level diff) | the diff *is* the structured patch, no separate schema |
+| `DELETE` | `commit` (remove) or `revert` | reversible; deletion is a record, not an erasure |
+| `GET` | read working tree | or read any historical state, by hash |
+| `(none)` | `branch` | parallel / private / proposed state, native |
+| `(none)` | `tag` | named / canonical / published version |
+| `(none)` | `merge` | consensus and reconciliation as first-class ops |
+| `(none)` | `fork` | take all your data and leave, lossless |
+| `(none)` | signed commit | authentication baked into the data layer |
+| `(none)` | `submodule` | composable embedded references across repos |
+
+Two entries in that table carry the most rhetorical weight. A signed commit binds authorship to a public key at the data layer, not at the application layer. You do not need an accounts table or a session store; identity travels with the record itself. A fork means a user can take the entire history and leave: not an export, not a backup request, but a full lossless copy with its own future. No REST API offers that operation. A `DELETE /users/me` removes your account; it does not give you the log.
+
+The deeper point is that git's log is already an event store in the sense Greg Young articulated with event sourcing and CQRS: each commit is a domain event, and the working tree is a projection derived from replaying those events. The same log can feed many different applications via different read projections: a comment widget, a reaction aggregator, a moderation log, a stats dashboard. None of them require a schema migration when a new projection is added; they just query the log differently. The **commit-as-write** primitive that §3 named is, in event-sourcing terms, an append to an immutable event log.
+
+A commit message can carry a typed payload, making the log a free event store with no schema layer:
+
+```
+op: react
+target: posts/your-blog-will-outlive-your-database
+value: 🔥
+actor: queelius
+ts: 2026-04-24T22:45:00Z
+```
+
+The message body is structured data. The log is queryable. Any reader action that can be expressed as a typed operation and a target can be stored this way, without a database, without a migration, without an operator. **Git-native publishing** is the claim that this substrate is sufficient for the entire participation layer of a static site.
+
+The next section grounds that claim in something concrete: a jigsaw puzzle where every piece placement is exactly this shape.
+
 ## 5. The jigsaw, a worked example
 
 ## 6. Honest limits
