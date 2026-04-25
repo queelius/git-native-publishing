@@ -491,7 +491,7 @@ git commit -m "Draft §6 honest limits"
 1. Plant the flags: **git-native publishing**; **commit-as-write**.
 2. Not selling a product. Naming a category that doesn't have one and should.
 3. If you've already built something in this shape, tell me. I want to know.
-4. The puzzle is at `/jigsaw`. Place a piece. Your name will be in the commit log forever. So will mine.
+4. The puzzle is at `/arcade/jigsaw`. Place a piece. Your name will be in the commit log forever. So will mine.
 5. (One-sentence self-referential note: this essay's source markdown is in git too; the whole argument is demonstrated by the artifact.)
 
 **Voice notes:** Short, direct, slightly intimate. The closing line should resonate. The self-referential note is optional but adds weight; cut if it feels forced.

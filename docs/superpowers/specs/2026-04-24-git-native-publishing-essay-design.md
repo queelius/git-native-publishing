@@ -93,7 +93,7 @@ Two coupled claims:
 - Plant the flags: **git-native publishing**; **commit-as-write**.
 - I'm not selling a product. I'm naming a category that doesn't have one and should.
 - If you've already built something in this shape, tell me. I want to know.
-- The puzzle is at `/jigsaw`. Place a piece. Your name will be in the commit log forever. So will mine.
+- The puzzle is at `/arcade/jigsaw`. Place a piece. Your name will be in the commit log forever. So will mine.
 
 ## Key prose / craft decisions
 
@@ -105,7 +105,7 @@ Two coupled claims:
 
 ## Demo dependencies referenced (out of scope for *this* essay)
 
-The essay assumes the jigsaw demo exists at `/jigsaw` by publication. The
+The essay assumes the jigsaw demo exists at `/arcade/jigsaw` by publication. The
 demo's design and implementation are a **separate project** with its own
 spec, plan, and build cycle. This essay is the *announcement and frame*;
 the demo's spec covers piece-slicer, OAuth flow, commit format, validation
