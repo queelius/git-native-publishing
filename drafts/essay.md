@@ -10,8 +10,7 @@ ago. One placed a piece while you were reading this sentence. You can see the
 picture assembling itself, tile by tile, toward something that isn't quite
 resolved yet.
 
-Here is the thing that makes this unusual: every piece placement is a git
-commit. When you drag a tile into position and it clicks into place, a commit
+Every piece placement is a git commit. When you drag a tile into position and it clicks into place, a commit
 lands in a public repository. It carries your GitHub username, a timestamp,
 and a structured record of which piece went where. The whole puzzle's solving
 history is a git log. That log is not stored in a database that I control. It is not behind a
@@ -51,9 +50,7 @@ visionaries; they were lazy in the exact right way.
 
 The forum did not have that option. A phpBB community lives only while someone tends the server. The moment the
 hosting bill bounces or the moderator takes a new job, the state goes with them. Not just the
-posts, but the replies, the edits, the votes, the relationships between pieces of
-content. All of it lived in a database that required an operator. When the
-operator left, the database closed.
+posts, but the replies, the edits, the votes, the relationships between pieces of content. When the operator left, the database closed.
 
 And this is not just about old forums. It is the same story for every layer of
 interactivity we add to a page today. Want comments? You need mutable state. Want
@@ -73,13 +70,13 @@ The write path never got the memo. While the read path was reinventing itself ar
 
 And every product that came along to fix WordPress reproduced the same architectural mistake. Ghost replaced WordPress with a cleaner editor; Substack replaced Ghost with built-in audiences. The hosting changed, the operator-dependency did not. The shape underneath stays exactly the same: a privileged server holding mutable state that the user does not own. Different paint, same chassis.
 
-The Jamstack movement looked like it might break this pattern. Static frontends, decoupled backends, deploy via git push. But "static frontend plus a SaaS backend" is not an architectural improvement; it is the same failure mode with extra steps. The HTML is still durable. The dynamic layer, the comments, the reaction counts, the personalization, still lives in a database somewhere. When that SaaS raises prices or shuts down, the participation layer dies exactly the way the phpBB forum died. The vocabulary changed. The structure did not.
+The Jamstack movement looked like it might break this pattern. Static frontends, decoupled backends, the whole read path served from a CDN. But "static frontend plus a SaaS backend" is not an architectural improvement; it is the same failure mode with extra steps. The HTML is still durable. The dynamic layer, the comments, the reaction counts, the personalization, still lives in a database somewhere. When that SaaS raises prices or shuts down, the participation layer dies exactly the way the phpBB forum died. The vocabulary changed. The structure did not.
 
 ## 3. The missing primitive
 
 The structure needs one new thing: a write substrate as durable as the read substrate.
 
-It has been sitting in `.git/` the whole time. Git is append-only: commits are never modified, only accumulated. It is content-addressed: every object in the store is named by a cryptographic hash of its contents, so the history cannot be silently altered. It is signed: commits can carry GPG signatures that bind authorship to a public key. It is fully replicated by every clone: no single server holds the authoritative copy. It is forkable without permission. These properties are not incidental to git's design; they are what make version control work at all. They also happen to be exactly the properties that the write path for the web has never had.
+It has been sitting in `.git/` the whole time. Git is append-only: commits are never modified, only accumulated. It is content-addressed: every object in the store is named by a cryptographic hash of its contents, so the history cannot be silently altered. It is signed: commits can carry GPG signatures that bind authorship to a public key. It is fully replicated by every clone: no single server holds the authoritative copy. It is forkable without permission. These properties are the reason version control works at all. They also happen to be exactly the properties that the write path for the web has never had.
 
 The unit of change in this substrate is a git commit, not a SQL row. Call this **commit-as-write**: a structured, signed, append-only record of a reader's action, living in the same repository as the content it touches, replicated everywhere the content is replicated.
 
@@ -109,9 +106,9 @@ Git's vocabulary includes all five of those operations and adds six that REST ha
 | `(none)` | signed commit | authentication baked into the data layer |
 | `(none)` | `submodule` | composable embedded references across repos |
 
-Two entries in that table carry the most rhetorical weight. A signed commit binds authorship to a public key at the data layer, not at the application layer. You do not need an accounts table or a session store; identity travels with the record itself. A fork means a user can take the entire history and leave: not an export, not a backup request, but a full lossless copy with its own future. No REST API offers that operation. A `DELETE /users/me` removes your account; it does not give you the log.
+Two entries in that table carry the most rhetorical weight. A signed commit binds authorship to a public key at the data layer, not at the application layer. You do not need an accounts table or a session store; identity travels with the record itself. A fork means a user can take the entire history and leave: not an export, not a backup request, but a full lossless copy with its own future. No REST API offers that operation. A `DELETE /users/me` removes your account; it does not give you your history.
 
-The deeper point is that git's log is already an event store in the sense Greg Young articulated with event sourcing and CQRS: each commit is a domain event, and the working tree is a projection derived from replaying those events. The same log can feed many different applications via different read projections: a comment widget, a reaction aggregator, a moderation log. None of them require a schema migration when a new projection is added; they just read the same log through a different lens. The **commit-as-write** primitive that §3 named is, in event-sourcing terms, an append to an immutable event log.
+The deeper point is that git's log is already an event store in the sense Greg Young articulated with event sourcing and CQRS: each commit is a domain event, and the working tree is a projection derived from replaying those events. The same log can feed many different applications via different read projections: a comment widget, a reaction aggregator, a moderation log. None of them require a schema migration when a new projection is added; they just read the same log through a different lens. The commit-as-write primitive that §3 named is, in event-sourcing terms, an append to an immutable event log.
 
 A commit message can carry a typed payload, making the log a free event store with no schema layer:
 
@@ -161,7 +158,7 @@ The MVP uses GitHub OAuth and the GitHub commit API. That dependency is real but
 
 Moderation is post-hoc, not pre-hoc. A revert or rebase can remove a bad commit, but the commit has to land first. WordPress's approval queue blocks spam before anyone sees it; this model cannot do that. For open-internet participation with anonymous actors, this is a genuine cost. For contexts where all participants are identified before they can commit, the gap narrows. For open-internet participation, it does not.
 
-The right-to-be-forgotten cuts against append-only history. Git's content-addressing means each commit hash depends on every commit before it. True deletion requires rebasing, and that rebase must be accepted by every clone holder. Cooperation cannot be guaranteed. This is a structural cost, not an engineering problem waiting for a solution. Any deployment in a GDPR-covered jurisdiction needs to reason carefully about what personal data enters the commit payload.
+The right-to-be-forgotten cuts against append-only history. Git's content-addressing means each commit hash depends on every commit before it. True deletion requires rebasing, and that rebase must be accepted by every clone holder. Cooperation cannot be guaranteed. This is a structural cost, not an engineering problem waiting for a solution: anything that enters the commit payload may sit there forever.
 
 The argument here is not that this beats everything. It is that the durable write substrate has been missing, and git already provides it for one specific class of interactions.
 
