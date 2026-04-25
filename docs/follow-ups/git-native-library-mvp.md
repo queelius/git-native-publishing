@@ -14,7 +14,7 @@ work; the current work finishes the essay first.
 
 ## Goal
 
-Build the library that powers the essay's jigsaw demo at `/jigsaw` on
+Build the library that powers the essay's jigsaw demo at `/arcade/jigsaw` on
 metafunctor.com, and make it reusable by the author for adding
 participation features to a Hugo blog over time.
 
@@ -38,7 +38,7 @@ In the MVP:
 - Validation hook (pre-commit check that the puzzle move is correct
   against the source image)
 - Conflict handling (two readers grab the same piece, second client retries)
-- Hugo template / shortcode for embedding the jigsaw at `/jigsaw`
+- Hugo template / shortcode for embedding the jigsaw at `/arcade/jigsaw`
 - AI image generation pipeline (weekly fresh image, generated server-side
   on a cron)
 - Counter rendering: the "47 people" number in the essay's opening reads
@@ -108,7 +108,7 @@ existing at publish time. The §7 closer optionally points to the library
 repo as a credibility signal, but the essay stands on its own as the
 category-naming artifact.
 
-The jigsaw demo at `/jigsaw` does depend on the library being functional
+The jigsaw demo at `/arcade/jigsaw` does depend on the library being functional
 by the time the demo is publicly linked. If the demo is not ready by essay
 publish, §0 falls back to a more abstract opening (per the essay spec's
 fallback note).
@@ -163,6 +163,36 @@ over committing directly.
 The FastAPI adapter is partly demonstrative (it shows the essay's
 vocabulary mapping at work) and partly practical (it gives the blog a
 standard REST surface for projects that need one).
+
+## Companion vision: arcade with multiple games
+
+The jigsaw is the first git-native game on metafunctor.com. The author
+plans more (checkers, async word puzzles, collaborative cipher cracking,
+etc.). Existing repos at `~/github/beta/arcade-lobby/` and
+`~/github/beta/arcade-grid/` may already contain relevant prior work
+worth reviewing when this brainstorm begins.
+
+The arcade has three substrates, picked per-game for what each does well:
+
+| Layer | Tech | Examples |
+|---|---|---|
+| Async game state | git-native (this library) | Jigsaw; async word puzzles; collaborative cipher cracking; anything where moves commute and don't need millisecond latency |
+| Real-time game state | WebRTC peer-to-peer or WebSocket | Checkers (when played live); anything where players need each other's moves immediately |
+| Lobby and chat | WebRTC data channels or thin WebSocket service; lobby state itself can be git-native | Presence, game discovery, ambient chat alongside play |
+
+This layered approach is consistent with the essay's §6 limits:
+git-native publishing is the substrate for participation, not for
+high-frequency state. Real-time games and chat live on substrates picked
+for those needs.
+
+URL structure: `/arcade/` is the multi-game hub. Individual games live
+at `/arcade/jigsaw`, `/arcade/checkers`, etc. The essay's canonical URL
+for the jigsaw demo is `/arcade/jigsaw` (committed at publication time).
+
+The arcade itself is a separate project. The git-native library
+described in the rest of this doc powers the async-game-state layer; the
+lobby and real-time-game layers are different projects with different
+brainstorms.
 
 ## App organization within a repo (vocabulary constraint)
 
