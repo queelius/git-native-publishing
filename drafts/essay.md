@@ -77,6 +77,18 @@ The Jamstack movement looked like it might break this pattern. Static frontends,
 
 ## 3. The missing primitive
 
+The structure needs one new thing: a write substrate as durable as the read substrate.
+
+It has been sitting in `.git/` the whole time. Git is append-only: commits are never modified, only accumulated. It is content-addressed: every object in the store is named by a cryptographic hash of its contents, so the history cannot be silently altered. It is signed: commits can carry GPG signatures that bind authorship to a public key. It is fully replicated by every clone: no single server holds the authoritative copy. It is forkable without permission. These properties are not incidental to git's design; they are what make version control work at all. They also happen to be exactly the properties that the write path for the web has never had.
+
+The unit of change in this substrate is a git commit, not a SQL row. Call this **commit-as-write**: a structured, signed, append-only record of a reader's action, living in the same repository as the content it touches, replicated everywhere the content is replicated.
+
+Build with commit-as-write as the default and you get **git-native publishing**: the static web with a write path that matches the read path's durability.
+
+The Ink & Switch local-first essay (2019) is the philosophical predecessor to this argument. It named the problem clearly: users should own their data, software should work offline, and nothing should disappear because a vendor stopped paying its server bill. Git-native publishing is local-first applied specifically to the public web's read-write substrate, using git's existing infrastructure rather than CRDTs. The "git-based CMS" industry (Decap, TinaCMS, CloudCannon) is the closest existing term, but it describes the wrong layer: those tools put git behind the editorial workflow for site *operators*, not behind the participation layer for *readers*. Utterances and Giscus proved that reader writes can live in a GitHub-hosted repository without a separate database, but they write to Issues and Discussions, not to the commit log, and neither project claims to generalize the pattern.
+
+The gap those works leave is not a feature; it is a missing primitive. The name for the primitive is commit-as-write. The name for the category built on it is git-native publishing.
+
 ## 4. Git's vocabulary is strictly richer than REST's
 
 ## 5. The jigsaw, a worked example
