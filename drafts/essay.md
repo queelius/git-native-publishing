@@ -127,6 +127,30 @@ Any reader action that can be expressed as a typed operation and a target fits t
 
 ## 5. The jigsaw, a worked example
 
+Go back to the puzzle at the bottom of the page. Those 47 people working alongside you: every move they made is a commit in a public repository, signed by their GitHub identity, timestamped, carrying a structured payload. When you place a piece, your client pushes something that looks like this:
+
+```
+op: place
+piece: 042
+slot: [3, 7]
+actor: queelius
+ts: 2026-04-24T22:47:13Z
+```
+
+The shape should look familiar. The `op: place` here is the same shape as the `op: react` from the previous section: a typed operation, a target, an actor, a timestamp. No schema negotiation. No database column to add. The commit message is the record.
+
+Before that commit lands, a pre-commit hook runs a verifier. Piece 042 either fits in slot [3, 7] or it does not; the source image is the ground truth. This is unusual. Most multi-author write systems cannot validate writes before accepting them, because there is no ground truth to check against: a comment is whatever the user typed, and the server has no way to reject it on correctness grounds. The jigsaw has ground truth. The pre-commit hook can reject a bad placement the way a compiler rejects a type error, not by policy but by reference to something real.
+
+If two readers grab piece 042 at the same moment, one commit lands first. Git's optimistic concurrency handles the rest: the second client gets a conflict, fetches fresh state, and retries with a piece that is actually available. No CRDT machinery required; no special conflict-resolution protocol. The model is free.
+
+Two people placing different pieces never conflict at all. The moves commute: order does not matter for the final picture. This is the deeper reason the jigsaw works as a demonstration. Participation is also visceral in a way comments are not. People want to place a piece; they want to see the picture advance because of them. And the picture forming in front of you is the demo itself: you can watch the assembly happen across all contributors in real time.
+
+Each week's puzzle uses a freshly-generated image. Reverse image search returns nothing; the picture is genuinely first-encounter for everyone who shows up.
+
+When the puzzle is complete, the solving history is the git log. Anyone can clone it tonight. Anyone can study it in 2035. Every contributor is in that log, signed by the identity they used, in the order they placed their pieces. That record does not belong to me: it belongs to the commits. The log will exist as long as one copy of the repository exists anywhere.
+
+That is the shape of git-native publishing in practice. The next section is about what it cannot do.
+
 ## 6. Honest limits
 
 ## 7. The claim, and the invitation
