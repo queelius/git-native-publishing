@@ -14,9 +14,7 @@ Here is the thing that makes this unusual: every piece placement is a git
 commit. When you drag a tile into position and it clicks into place, a commit
 lands in a public repository. It carries your GitHub username, a timestamp,
 and a structured record of which piece went where. The whole puzzle's solving
-history is a git log.
-
-That log is not stored in a database that I control. It is not behind a
+history is a git log. That log is not stored in a database that I control. It is not behind a
 paywall or an API rate limit. It is not going to disappear if I stop paying
 for a server. Every person who has ever touched this puzzle is in that log,
 and the log will exist as long as one copy of the repository exists somewhere.
@@ -24,15 +22,14 @@ Someone can fork it tonight. Someone can clone it in 2035. The history does
 not belong to me; it belongs to the commits, which means it belongs to
 everyone who made one.
 
-I find this worth sitting with for a moment. The standard way to build a
+The standard way to build a
 puzzle like this would be a database table: `piece_id`, `slot_x`, `slot_y`,
 `user_id`, `timestamp`. The table lives on a server. The server is somebody's
 responsibility. When that person gets tired or goes broke or moves on, the
 table disappears, and the history disappears with it. Every comment thread,
 every leaderboard, every "who solved it first" record: gone.
 
-You have seen this happen. We all have. Now let me tell you why your forum
-threads from 2008 are gone.
+Your forum threads from 2008 are gone.
 
 ## 1. The asymmetry
 
