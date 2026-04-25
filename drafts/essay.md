@@ -87,7 +87,7 @@ Build with commit-as-write as the default and you get **git-native publishing**:
 
 The Ink & Switch local-first essay (2019) is the philosophical predecessor to this argument. It named the problem clearly: users should own their data, software should work offline, and nothing should disappear because a vendor stopped paying its server bill. Git-native publishing is local-first applied specifically to the public web's read-write substrate, using git's existing infrastructure rather than CRDTs. The "git-based CMS" industry (Decap, TinaCMS, CloudCannon) is the closest existing term, but it describes the wrong layer: those tools put git behind the editorial workflow for site *operators*, not behind the participation layer for *readers*. Utterances and Giscus proved that reader writes can live in a GitHub-hosted repository without a separate database, but they write to Issues and Discussions, not to the commit log, and neither project claims to generalize the pattern.
 
-The gap those works leave is not a feature; it is a missing primitive. The name for the primitive is commit-as-write. The name for the category built on it is git-native publishing.
+This substrate has a vocabulary REST does not.
 
 ## 4. Git's vocabulary is strictly richer than REST's
 
