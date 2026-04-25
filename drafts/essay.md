@@ -93,7 +93,7 @@ This substrate has a vocabulary REST does not.
 
 REST's vocabulary is five verbs applied to named resources: GET, POST, PUT, PATCH, DELETE. That model has been the operating assumption of the writable web for roughly 25 years. It is not wrong; it maps cleanly onto databases, fits HTTP semantics, and scales to most application needs. But it is a model for mutating state, not for accumulating history.
 
-Git's vocabulary includes all five of those operations and adds six that REST has no native equivalent for: `branch`, `tag`, `merge`, `fork`, signed commit, `submodule`. These are not convenience features layered on top of storage. They are the core operations that make distributed version control work, and each one carries semantics REST cannot express. The table makes this concrete:
+Git's vocabulary includes all five of those operations and adds six that REST has no native equivalent for: `branch`, `tag`, `merge`, `fork`, signed commit, `submodule`. These are not convenience features layered on top of storage. They are the core operations that make distributed version control work, and each one carries semantics REST cannot express.
 
 | REST/DB verb | Git operation | What git adds that REST/SQL can't |
 |---|---|---|
@@ -123,9 +123,9 @@ actor: queelius
 ts: 2026-04-24T22:45:00Z
 ```
 
-The message body is structured data. The log is queryable. Any reader action that can be expressed as a typed operation and a target can be stored this way, without a database, without a migration, without an operator. **Git-native publishing** is the claim that this substrate is sufficient for the entire participation layer of a static site.
+Any reader action that can be expressed as a typed operation and a target fits this shape: a comment, a reaction, a vote, a placed jigsaw piece.
 
-The next section grounds that claim in something concrete: a jigsaw puzzle where every piece placement is exactly this shape.
+The next section works one through with a jigsaw puzzle: discrete pieces, unambiguous positions, multiple actors, shared state.
 
 ## 5. The jigsaw, a worked example
 
